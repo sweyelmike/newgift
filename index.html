@@ -7,127 +7,129 @@
     <style>
         body {
             text-align: center;
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
             background-color: #ffe6e6;
-            color: black;
         }
-        .container {
-            padding: 20px;
-        }
-        .hidden {
+        #mission1, #mission2, #mission3, #finalReward {
             display: none;
         }
-        .btn {
-            font-size: 18px;
+        .image {
+            width: 300px;
+            height: auto;
+        }
+        .button {
             padding: 10px 20px;
+            font-size: 18px;
             border: none;
             cursor: pointer;
-            transition: 0.3s;
             border-radius: 10px;
+            margin: 10px;
         }
-        .start-btn { background-color: red; color: white; }
-        .next-btn { background-color: green; color: white; }
-        .retry-btn { background-color: orange; color: white; }
-        .text-box {
+        .start-btn {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        .next-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .input-box {
             padding: 10px;
-            font-size: 18px;
-            width: 200px;
-            margin-top: 10px;
-        }
-        .chest-container {
-            position: relative;
-        }
-        .chest-gif {
-            width: 200px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #333;
         }
     </style>
 </head>
 <body>
 
-    <div class="container" id="startScreen">
-        <h2>🔴 Agent, Your Mission Starts Now! 🔴</h2>
-        <p>Your mission, should you choose to accept it, begins here.</p>
-        <button class="btn start-btn" onclick="startMission()">Start Mission</button>
+    <!-- START SCREEN -->
+    <div id="start">
+        <h1>🚀 Welcome, Agent! 🚀</h1>
+        <p>Your secret mission begins now. Click below to start!</p>
+        <button class="button start-btn" onclick="startMission()">Start Mission</button>
     </div>
 
-    <!-- Mission 1: Funny Riddle -->
-    <div class="container hidden" id="mission1">
-        <h2>Mission 1: Solve the Riddle</h2>
-        <p>🔍 I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
-        <input type="text" class="text-box" id="riddleAnswer" placeholder="Type your answer...">
-        <button class="btn next-btn" onclick="checkRiddle()">Submit</button>
-        <p id="riddleMessage"></p>
+    <!-- MISSION 1 -->
+    <div id="mission1">
+        <h2>🪖 Mission 1: Decode the Secret 🪖</h2>
+        <img src="battle-cat.jpg" class="image">
+        <p>Here’s your scrambled message: <strong>uyo ear ym etnienvla</strong></p>
+        <input type="text" id="codeInput" class="input-box" placeholder="Enter the correct phrase">
+        <button class="button next-btn" onclick="checkCode()">Submit</button>
     </div>
 
-    <!-- Mission 2: Crack the Code -->
-    <div class="container hidden" id="mission2">
-        <h2>Mission 2: Crack the Code</h2>
-        <p>🔐 Unscramble the text below to form a meaningful sentence.</p>
-        <h3 id="scrambledText">oyu ear ym iveeetneln</h3>
-        <input type="text" class="text-box" id="codeAnswer" placeholder="Type the correct sentence...">
-        <button class="btn next-btn" onclick="checkCode()">Submit</button>
-        <p id="codeMessage"></p>
+    <!-- MISSION 2 -->
+    <div id="mission2">
+        <h2>🔍 Mission 2: Solve the Riddle 🔍</h2>
+        <p>I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
+        <input type="text" id="riddleInput" class="input-box" placeholder="Enter your answer">
+        <button class="button next-btn" onclick="checkRiddle()">Submit</button>
+        <div id="riddleResult"></div>
     </div>
 
-    <!-- Mission 3: Claim the Reward -->
-    <div class="container hidden" id="mission3">
-        <h2>🎁 Final Mission: Claim Your Reward</h2>
-        <p>Click the chest below to receive your prize!</p>
-        <div class="chest-container">
-            <img src="treasure.gif" class="chest-gif" onclick="claimReward()">
-        </div>
-        <p id="rewardMessage"></p>
+    <!-- MISSION 3 -->
+    <div id="mission3">
+        <h2>🎁 Mission 3: Claim Your Treasure 🎁</h2>
+        <img src="treasure.gif" class="image" onclick="claimReward()">
+        <p>Click the treasure to claim your reward!</p>
+    </div>
+
+    <!-- FINAL REWARD -->
+    <div id="finalReward">
+        <h2>🎉 Congratulations! 🎉</h2>
+        <p>You have completed the mission! Click below to download your reward.</p>
+        <button class="button next-btn" onclick="downloadReward()">Download Reward</button>
     </div>
 
     <script>
         function startMission() {
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('mission1').classList.remove('hidden');
-        }
-
-        function checkRiddle() {
-            let answer = document.getElementById('riddleAnswer').value.toLowerCase();
-            let message = document.getElementById('riddleMessage');
-
-            if (answer === "snickers") {
-                message.innerHTML = "🎉 Congratulations, my intelligent agent! Proceed to the next mission.";
-                setTimeout(() => {
-                    document.getElementById('mission1').classList.add('hidden');
-                    document.getElementById('mission2').classList.remove('hidden');
-                }, 2000);
-            } else {
-                message.innerHTML = "❌ Wrong answer! Try again.";
-            }
+            document.getElementById("start").style.display = "none";
+            document.getElementById("mission1").style.display = "block";
         }
 
         function checkCode() {
-            let answer = document.getElementById('codeAnswer').value.toLowerCase();
-            let message = document.getElementById('codeMessage');
-
-            if (answer === "you are my valentine") {
-                message.innerHTML = "✅ Well done, Agent! Proceed to the final mission.";
-                setTimeout(() => {
-                    document.getElementById('mission2').classList.add('hidden');
-                    document.getElementById('mission3').classList.remove('hidden');
-                }, 2000);
+            let input = document.getElementById("codeInput").value.toLowerCase();
+            if (input === "you are my valentine") {
+                document.getElementById("mission1").style.display = "none";
+                document.getElementById("mission2").style.display = "block";
             } else {
-                message.innerHTML = "❌ Incorrect! Try again.";
+                alert("Wrong answer! Try again.");
             }
         }
 
-        function claimReward() {
-            let message = document.getElementById('rewardMessage');
-            message.innerHTML = "Downloading your reward... 🎁";
+        function checkRiddle() {
+            let input = document.getElementById("riddleInput").value.toLowerCase();
+            let resultDiv = document.getElementById("riddleResult");
 
-            setTimeout(() => {
-                let link = document.createElement('a');
-                link.href = "tea_coupon.png";  // Make sure the coupon image is uploaded in the repository
-                link.download = "Tea_Date_Coupon.png";
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                message.innerHTML = "✅ Your reward is downloaded!";
-            }, 2000);
+            if (input === "snickers") {
+                resultDiv.innerHTML = '<img src="image1.jpg" class="image"><p>🎉 Congratulations, my intelligent! Click below for the next mission.</p><button class="button next-btn" onclick="nextMission()">Next Mission</button>';
+            } else if (resultDiv.innerHTML.includes("warning")) {
+                resultDiv.innerHTML = '<p>😞 Sorry dear, better luck next time!</p>';
+            } else if (resultDiv.innerHTML.includes("Try again")) {
+                resultDiv.innerHTML = '<img src="image3.jpg" class="image"><p>⚠️ Warning: This is your last chance!</p>';
+            } else {
+                resultDiv.innerHTML = '<img src="image2.jpg" class="image"><p>❌ Try again!</p>';
+            }
+        }
+
+        function nextMission() {
+            document.getElementById("mission2").style.display = "none";
+            document.getElementById("mission3").style.display = "block";
+        }
+
+        function claimReward() {
+            document.getElementById("mission3").style.display = "none";
+            document.getElementById("finalReward").style.display = "block";
+        }
+
+        function downloadReward() {
+            let link = document.createElement("a");
+            link.href = "tea_coupon.png";
+            link.download = "Tea-Date-Coupon.png";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
     </script>
 
