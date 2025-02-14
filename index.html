@@ -3,149 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Step 1</title>
+    <title>Secret Valentine's Mission</title>
     <style>
-        /* Background Styling */
         body {
-            background-image: url('battle-cat.jpg'); /* Replace with your cat image */
-            background-size: cover;
-            background-position: center;
             text-align: center;
-            font-family: 'Courier New', monospace;
-            color: white;
-            padding-top: 100px;
-        }
-
-        /* Animated text */
-        #missionText {
-            font-size: 28px;
-            font-weight: bold;
-            border-right: 3px solid white;
-            white-space: nowrap;
-            overflow: hidden;
-            width: 0;
-            animation: typing 3s steps(40, end) forwards;
-        }
-
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        /* Fancy Input Box */
-        #answerBox {
-            margin-top: 20px;
-            padding: 12px;
-            font-size: 20px;
-            border-radius: 10px;
-            border: 2px solid #ffcc00;
-            background: rgba(255, 255, 255, 0.9);
-            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background-color: pink;
             color: black;
-            font-weight: bold;
+            transition: background 1s ease-in-out;
         }
-
-        /* Neon Glow Buttons */
-        .neon-button {
-            margin-top: 10px;
-            padding: 12px 25px;
-            font-size: 18px;
+        .container {
+            margin-top: 50px;
+        }
+        .hidden {
+            display: none;
+        }
+        .reward {
+            font-size: 24px;
+            margin-top: 20px;
             font-weight: bold;
+            color: darkred;
+            transition: opacity 1s ease-in-out;
+        }
+        button {
+            background-color: #ff4081;
+            color: white;
+            font-size: 18px;
             border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
             cursor: pointer;
-            border-radius: 10px;
-            background-color: #ff0040;
-            color: white;
-            text-shadow: 0 0 10px #ffcc00;
-            box-shadow: 0 0 15px #ffcc00;
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+            transition: transform 0.3s ease-in-out;
         }
-
-        .neon-button:hover {
+        button:hover {
             transform: scale(1.1);
-            box-shadow: 0 0 25px #ffcc00;
         }
-
-        /* Result Images */
-        #resultImage {
-            display: none;
-            margin-top: 20px;
-            width: 250px;
-            border-radius: 10px;
-        }
-
-        /* Message */
-        #message {
-            font-size: 22px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-
-        /* Hidden Next Mission Link */
-        #nextMission {
-            display: none;
-            margin-top: 20px;
+        input {
+            padding: 10px;
             font-size: 18px;
-            font-weight: bold;
-            padding: 12px 25px;
-            background-color: gold;
             border-radius: 10px;
-            text-decoration: none;
-            color: black;
-            box-shadow: 0 0 15px gold;
-            transition: transform 0.2s;
+            border: 2px solid #ff4081;
+            text-align: center;
+            margin-top: 20px;
         }
-
-        #nextMission:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 25px gold;
+        .chest {
+            width: 200px;
+            height: auto;
+            transition: transform 0.5s ease-in-out;
         }
     </style>
 </head>
 <body>
 
-    <h1 id="missionText">🚀 Mission Step 1: Solve the Riddle!</h1>
+    <!-- Mission Briefing -->
+    <div class="container" id="startScreen">
+        <h1>🕵️ Secret Mission: Valentine's Day 💖</h1>
+        <p>Agent, your mission has begun. This is a **top-secret** operation! 🎯</p>
+        <p>Your **objective**: Solve all the challenges to unlock a **classified reward.**</p>
+        <p>Failure is **not an option.** Are you ready?</p>
+        <button onclick="startMission()">💥 Begin Mission 💥</button>
+    </div>
 
-    <p><b>Riddle:</b> I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
+    <!-- Mission 1: Solve the Riddle -->
+    <div class="container hidden" id="mission1">
+        <h2>🔍 Mission 1: Solve the Riddle</h2>
+        <p>To proceed, you must answer this question:</p>
+        <p><b>Riddle:</b> I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
+        <input type="text" id="riddleAnswer" placeholder="Your Answer...">
+        <button onclick="checkRiddle()">Submit</button>
 
-    <input type="text" id="answerBox" placeholder="Type your answer...">
-    <button class="neon-button" onclick="checkAnswer()">Submit</button>
+        <p id="riddleResponse" class="hidden reward"></p>
+        <button id="nextMission1" class="hidden" onclick="goToMission2()">Next Mission</button>
+    </div>
 
-    <img id="resultImage">
-    <p id="message"></p>
+    <!-- Mission 2: Crack the Code -->
+    <div class="container hidden" id="mission2">
+        <h2>🔢 Mission 2: Crack the Code</h2>
+        <p>Unscramble this **secret message:**</p>
+        <h3 id="scrambledText">nYo arme udlaeirtneVy yed</h3>
+        <input type="text" id="codeAnswer" placeholder="Your Answer...">
+        <button onclick="checkCode()">Submit</button>
 
-    <a id="nextMission" href="next-mission.html">Next Mission 🚀</a>
+        <p id="codeResponse" class="hidden reward"></p>
+        <button id="nextMission2" class="hidden" onclick="goToFinalMission()">Final Mission</button>
+    </div>
+
+    <!-- Final Mission: Unlock the Reward -->
+    <div class="container hidden" id="finalMission">
+        <h2>🎁 Final Mission: Claim Your Reward</h2>
+        <p>Type **ANYTHING** in the box below to unlock your final prize!</p>
+
+        <img id="chest" src="closed-chest.gif" alt="Locked Chest" class="chest"> <!-- Closed Chest GIF -->
+
+        <br><br>
+        <input type="text" id="finalAnswer" placeholder="Type here...">
+        <button onclick="unlockChest()">Submit</button>
+
+        <p id="finalResponse" class="reward hidden">🎉 Congratulations, Agent! You've unlocked the reward! ❤️</p>
+        <button id="claimReward" class="hidden" onclick="downloadCoupon()">💌 Claim Your Reward</button>
+    </div>
 
     <script>
-        let attempts = 0;
+        function startMission() {
+            document.getElementById("startScreen").classList.add("hidden");
+            document.getElementById("mission1").classList.remove("hidden");
+        }
 
-        function checkAnswer() {
-            let answer = document.getElementById("answerBox").value.trim().toLowerCase();
-            let resultImage = document.getElementById("resultImage");
-            let message = document.getElementById("message");
-            let nextMission = document.getElementById("nextMission");
+        function checkRiddle() {
+            let answer = document.getElementById("riddleAnswer").value.trim().toLowerCase();
+            let response = document.getElementById("riddleResponse");
 
             if (answer === "snickers") {
-                resultImage.src = "image1.jpg";  // Replace with Image 1
-                message.innerHTML = "🎉 Congratulations, my intelligent!";
-                nextMission.style.display = "inline-block";
+                response.innerHTML = "🎯 Correct, Agent! Proceed to the next mission!";
+                document.getElementById("nextMission1").classList.remove("hidden");
             } else {
-                attempts++;
-                if (attempts === 1) {
-                    resultImage.src = "image2.jpg";  // Replace with Image 2
-                    message.innerHTML = "❌ Try again!";
-                } else if (attempts === 2) {
-                    resultImage.src = "image3.jpg";  // Replace with Image 3
-                    message.innerHTML = "⚠️ Warning: This is your last chance!";
-                } else {
-                    message.innerHTML = "💔 Sorry dear, better luck next time 😞";
-                    document.getElementById("answerBox").disabled = true;
-                    document.getElementById("submitBtn").disabled = true;
-                }
+                response.innerHTML = "🚨 Wrong answer! Try again!";
             }
-            resultImage.style.display = "block";
+            response.classList.remove("hidden");
+        }
+
+        function goToMission2() {
+            document.getElementById("mission1").classList.add("hidden");
+            document.getElementById("mission2").classList.remove("hidden");
+        }
+
+        function checkCode() {
+            let answer = document.getElementById("codeAnswer").value.trim().toLowerCase();
+            let response = document.getElementById("codeResponse");
+
+            if (answer === "you are my valentine dear") {
+                response.innerHTML = "🎯 Well done, Agent! Proceed to the final mission!";
+                document.getElementById("nextMission2").classList.remove("hidden");
+            } else {
+                response.innerHTML = "🚨 Incorrect! Try again!";
+            }
+            response.classList.remove("hidden");
+        }
+
+        function goToFinalMission() {
+            document.getElementById("mission2").classList.add("hidden");
+            document.getElementById("finalMission").classList.remove("hidden");
+        }
+
+        function unlockChest() {
+            document.getElementById("finalResponse").classList.remove("hidden");
+            document.getElementById("claimReward").classList.remove("hidden");
+            document.getElementById("chest").src = "open-chest.gif"; // Open Chest GIF
+        }
+
+        function downloadCoupon() {
+            let link = document.createElement('a');
+            link.href = "tea-date-coupon.jpg";  // Add coupon image URL
+            link.download = "Tea_Date_Coupon.jpg";
+            link.click();
         }
     </script>
 
 </body>
-  </html>
+</html>
