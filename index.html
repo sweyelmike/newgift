@@ -3,160 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secret Valentine's Mission</title>
+    <title>Secret Mission</title>
     <style>
         body {
             text-align: center;
             font-family: 'Arial', sans-serif;
-            background-color: pink;
+            background-color: #ffe6e6;
             color: black;
-            transition: background 1s ease-in-out;
         }
         .container {
-            margin-top: 50px;
+            padding: 20px;
         }
         .hidden {
             display: none;
         }
-        .reward {
-            font-size: 24px;
-            margin-top: 20px;
-            font-weight: bold;
-            color: darkred;
-            transition: opacity 1s ease-in-out;
-        }
-        button {
-            background-color: #ff4081;
-            color: white;
+        .btn {
             font-size: 18px;
+            padding: 10px 20px;
             border: none;
-            padding: 12px 20px;
-            border-radius: 30px;
             cursor: pointer;
-            margin-top: 20px;
-            transition: transform 0.3s ease-in-out;
+            transition: 0.3s;
+            border-radius: 10px;
         }
-        button:hover {
-            transform: scale(1.1);
-        }
-        input {
+        .start-btn { background-color: red; color: white; }
+        .next-btn { background-color: green; color: white; }
+        .retry-btn { background-color: orange; color: white; }
+        .text-box {
             padding: 10px;
             font-size: 18px;
-            border-radius: 10px;
-            border: 2px solid #ff4081;
-            text-align: center;
-            margin-top: 20px;
-        }
-        .chest {
             width: 200px;
-            height: auto;
-            transition: transform 0.5s ease-in-out;
+            margin-top: 10px;
+        }
+        .chest-container {
+            position: relative;
+        }
+        .chest-gif {
+            width: 200px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Mission Briefing -->
     <div class="container" id="startScreen">
-        <h1>🕵️ Secret Mission: Valentine's Day 💖</h1>
-        <p>Agent, your mission has begun. This is a **top-secret** operation! 🎯</p>
-        <p>Your **objective**: Solve all the challenges to unlock a **classified reward.**</p>
-        <p>Failure is **not an option.** Are you ready?</p>
-        <button onclick="startMission()">💥 Begin Mission 💥</button>
+        <h2>🔴 Agent, Your Mission Starts Now! 🔴</h2>
+        <p>Your mission, should you choose to accept it, begins here.</p>
+        <button class="btn start-btn" onclick="startMission()">Start Mission</button>
     </div>
 
-    <!-- Mission 1: Solve the Riddle -->
+    <!-- Mission 1: Funny Riddle -->
     <div class="container hidden" id="mission1">
-        <h2>🔍 Mission 1: Solve the Riddle</h2>
-        <p>To proceed, you must answer this question:</p>
-        <p><b>Riddle:</b> I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
-        <input type="text" id="riddleAnswer" placeholder="Your Answer...">
-        <button onclick="checkRiddle()">Submit</button>
-
-        <p id="riddleResponse" class="hidden reward"></p>
-        <button id="nextMission1" class="hidden" onclick="goToMission2()">Next Mission</button>
+        <h2>Mission 1: Solve the Riddle</h2>
+        <p>🔍 I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
+        <input type="text" class="text-box" id="riddleAnswer" placeholder="Type your answer...">
+        <button class="btn next-btn" onclick="checkRiddle()">Submit</button>
+        <p id="riddleMessage"></p>
     </div>
 
     <!-- Mission 2: Crack the Code -->
     <div class="container hidden" id="mission2">
-        <h2>🔢 Mission 2: Crack the Code</h2>
-        <p>Unscramble this **secret message:**</p>
-        <h3 id="scrambledText">nYo arme udlaeirtneVy yed</h3>
-        <input type="text" id="codeAnswer" placeholder="Your Answer...">
-        <button onclick="checkCode()">Submit</button>
-
-        <p id="codeResponse" class="hidden reward"></p>
-        <button id="nextMission2" class="hidden" onclick="goToFinalMission()">Final Mission</button>
+        <h2>Mission 2: Crack the Code</h2>
+        <p>🔐 Unscramble the text below to form a meaningful sentence.</p>
+        <h3 id="scrambledText">oyu ear ym iveeetneln</h3>
+        <input type="text" class="text-box" id="codeAnswer" placeholder="Type the correct sentence...">
+        <button class="btn next-btn" onclick="checkCode()">Submit</button>
+        <p id="codeMessage"></p>
     </div>
 
-    <!-- Final Mission: Unlock the Reward -->
-    <div class="container hidden" id="finalMission">
+    <!-- Mission 3: Claim the Reward -->
+    <div class="container hidden" id="mission3">
         <h2>🎁 Final Mission: Claim Your Reward</h2>
-        <p>Type **ANYTHING** in the box below to unlock your final prize!</p>
-
-        <img id="chest" src="closed-chest.gif" alt="Locked Chest" class="chest"> <!-- Closed Chest GIF -->
-
-        <br><br>
-        <input type="text" id="finalAnswer" placeholder="Type here...">
-        <button onclick="unlockChest()">Submit</button>
-
-        <p id="finalResponse" class="reward hidden">🎉 Congratulations, Agent! You've unlocked the reward! ❤️</p>
-        <button id="claimReward" class="hidden" onclick="downloadCoupon()">💌 Claim Your Reward</button>
+        <p>Click the chest below to receive your prize!</p>
+        <div class="chest-container">
+            <img src="treasure.gif" class="chest-gif" onclick="claimReward()">
+        </div>
+        <p id="rewardMessage"></p>
     </div>
 
     <script>
         function startMission() {
-            document.getElementById("startScreen").classList.add("hidden");
-            document.getElementById("mission1").classList.remove("hidden");
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('mission1').classList.remove('hidden');
         }
 
         function checkRiddle() {
-            let answer = document.getElementById("riddleAnswer").value.trim().toLowerCase();
-            let response = document.getElementById("riddleResponse");
+            let answer = document.getElementById('riddleAnswer').value.toLowerCase();
+            let message = document.getElementById('riddleMessage');
 
             if (answer === "snickers") {
-                response.innerHTML = "🎯 Correct, Agent! Proceed to the next mission!";
-                document.getElementById("nextMission1").classList.remove("hidden");
+                message.innerHTML = "🎉 Congratulations, my intelligent agent! Proceed to the next mission.";
+                setTimeout(() => {
+                    document.getElementById('mission1').classList.add('hidden');
+                    document.getElementById('mission2').classList.remove('hidden');
+                }, 2000);
             } else {
-                response.innerHTML = "🚨 Wrong answer! Try again!";
+                message.innerHTML = "❌ Wrong answer! Try again.";
             }
-            response.classList.remove("hidden");
-        }
-
-        function goToMission2() {
-            document.getElementById("mission1").classList.add("hidden");
-            document.getElementById("mission2").classList.remove("hidden");
         }
 
         function checkCode() {
-            let answer = document.getElementById("codeAnswer").value.trim().toLowerCase();
-            let response = document.getElementById("codeResponse");
+            let answer = document.getElementById('codeAnswer').value.toLowerCase();
+            let message = document.getElementById('codeMessage');
 
-            if (answer === "you are my valentine dear") {
-                response.innerHTML = "🎯 Well done, Agent! Proceed to the final mission!";
-                document.getElementById("nextMission2").classList.remove("hidden");
+            if (answer === "you are my valentine") {
+                message.innerHTML = "✅ Well done, Agent! Proceed to the final mission.";
+                setTimeout(() => {
+                    document.getElementById('mission2').classList.add('hidden');
+                    document.getElementById('mission3').classList.remove('hidden');
+                }, 2000);
             } else {
-                response.innerHTML = "🚨 Incorrect! Try again!";
+                message.innerHTML = "❌ Incorrect! Try again.";
             }
-            response.classList.remove("hidden");
         }
 
-        function goToFinalMission() {
-            document.getElementById("mission2").classList.add("hidden");
-            document.getElementById("finalMission").classList.remove("hidden");
-        }
+        function claimReward() {
+            let message = document.getElementById('rewardMessage');
+            message.innerHTML = "Downloading your reward... 🎁";
 
-        function unlockChest() {
-            document.getElementById("finalResponse").classList.remove("hidden");
-            document.getElementById("claimReward").classList.remove("hidden");
-            document.getElementById("chest").src = "open-chest.gif"; // Open Chest GIF
-        }
-
-        function downloadCoupon() {
-            let link = document.createElement('a');
-            link.href = "tea-date-coupon.jpg";  // Add coupon image URL
-            link.download = "Tea_Date_Coupon.jpg";
-            link.click();
+            setTimeout(() => {
+                let link = document.createElement('a');
+                link.href = "tea_coupon.png";  // Make sure the coupon image is uploaded in the repository
+                link.download = "Tea_Date_Coupon.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                message.innerHTML = "✅ Your reward is downloaded!";
+            }, 2000);
         }
     </script>
 
