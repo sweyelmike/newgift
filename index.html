@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Step 1</title>
+    <style>
+        /* Background Styling */
+        body {
+            background-image: url('battle-cat.jpg'); /* Replace with your cat image */
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: white;
+            padding-top: 100px;
+        }
+
+        /* Animated text */
+        #missionText {
+            font-size: 28px;
+            font-weight: bold;
+            border-right: 3px solid white;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 0;
+            animation: typing 3s steps(40, end) forwards;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* Fancy Input Box */
+        #answerBox {
+            margin-top: 20px;
+            padding: 12px;
+            font-size: 20px;
+            border-radius: 10px;
+            border: 2px solid #ffcc00;
+            background: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            color: black;
+            font-weight: bold;
+        }
+
+        /* Neon Glow Buttons */
+        .neon-button {
+            margin-top: 10px;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            border-radius: 10px;
+            background-color: #ff0040;
+            color: white;
+            text-shadow: 0 0 10px #ffcc00;
+            box-shadow: 0 0 15px #ffcc00;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .neon-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ffcc00;
+        }
+
+        /* Result Images */
+        #resultImage {
+            display: none;
+            margin-top: 20px;
+            width: 250px;
+            border-radius: 10px;
+        }
+
+        /* Message */
+        #message {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* Hidden Next Mission Link */
+        #nextMission {
+            display: none;
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 12px 25px;
+            background-color: gold;
+            border-radius: 10px;
+            text-decoration: none;
+            color: black;
+            box-shadow: 0 0 15px gold;
+            transition: transform 0.2s;
+        }
+
+        #nextMission:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px gold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="missionText">🚀 Mission Step 1: Solve the Riddle!</h1>
+
+    <p><b>Riddle:</b> I am not a shoe, but my name sounds the same. I'm the favorite of your wife. What am I?</p>
+
+    <input type="text" id="answerBox" placeholder="Type your answer...">
+    <button class="neon-button" onclick="checkAnswer()">Submit</button>
+
+    <img id="resultImage">
+    <p id="message"></p>
+
+    <a id="nextMission" href="next-mission.html">Next Mission 🚀</a>
+
+    <script>
+        let attempts = 0;
+
+        function checkAnswer() {
+            let answer = document.getElementById("answerBox").value.trim().toLowerCase();
+            let resultImage = document.getElementById("resultImage");
+            let message = document.getElementById("message");
+            let nextMission = document.getElementById("nextMission");
+
+            if (answer === "snickers") {
+                resultImage.src = "image1.jpg";  // Replace with Image 1
+                message.innerHTML = "🎉 Congratulations, my intelligent!";
+                nextMission.style.display = "inline-block";
+            } else {
+                attempts++;
+                if (attempts === 1) {
+                    resultImage.src = "image2.jpg";  // Replace with Image 2
+                    message.innerHTML = "❌ Try again!";
+                } else if (attempts === 2) {
+                    resultImage.src = "image3.jpg";  // Replace with Image 3
+                    message.innerHTML = "⚠️ Warning: This is your last chance!";
+                } else {
+                    message.innerHTML = "💔 Sorry dear, better luck next time 😞";
+                    document.getElementById("answerBox").disabled = true;
+                    document.getElementById("submitBtn").disabled = true;
+                }
+            }
+            resultImage.style.display = "block";
+        }
+    </script>
+
+</body>
+  </html>
